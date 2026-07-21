@@ -1,0 +1,35 @@
+// scripts.js
+const menuToggle = document.getElementById('menuToggle');
+const siteNav = document.getElementById('siteNav');
+const leadForm = document.getElementById('leadForm');
+const emailInput = document.getElementById('email');
+const formMessage = document.getElementById('formMessage');
+
+menuToggle.addEventListener('click', () => {
+  const opened = siteNav.classList.toggle('is-open');
+  menuToggle.setAttribute('aria-expanded', opened ? 'true' : 'false');
+});
+
+siteNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    siteNav.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+leadForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const value = emailInput.value.trim();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  if (!ok) {
+    formMessage.textContent = 'Введите корректный email.';
+    formMessage.style.color = '#D14343';
+    emailInput.focus();
+    return;
+  }
+
+  formMessage.textContent = 'Спасибо, мы свяжемся.';
+  formMessage.style.color = '#5B5FEF';
+  leadForm.reset();
+});
